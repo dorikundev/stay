@@ -1,0 +1,35 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>予約内容の確認</h4>
+        </div>
+        <div class="card-body">
+          <p>施設名:<%= @reservation.room.name %></p>
+          <p>チェックイン日: <%= @reservation.check_in_date.strftime("%Y/%m/%d") %></p>
+          <p>チェックアウト日: <%= @reservation.check_out_date.strftime("%Y/%m/%d") %></p>
+          <p>宿泊人数: <%= @reservation.number_of_guests %>人</p>
+          <p>宿泊日数: <%= @reservation.duration %>泊</p>
+          <%= form_with(model: @reservation, local: true) do |f| %>
+            <%= f.hidden_field :room_id %>
+            <%= f.hidden_field :check_in_date %>
+            <%= f.hidden_field :check_out_date %>
+            <%= f.hidden_field :number_of_guests %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <p class="fw-bold">合計金額: <%= number_to_currency(@reservation.total_price) %></p>
+            
+            <div class="d-grid gap-2">
+              <%= f.submit "予約を確定", class: "mb-1 btn btn-warning rounded" %>
+              <% if @reservation.persisted? %>
+                <%= link_to "戻る", edit_reservation_path(@reservation), class: "btn btn-secondary rounded" %>
+              <% else %>
+                <%= link_to "キャンセル", room_path(@room), class: "btn btn-secondary rounded" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>

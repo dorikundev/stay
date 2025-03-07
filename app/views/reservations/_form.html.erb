@@ -1,0 +1,26 @@
+<%= form_with(model: @reservation || Reservation.new, url: confirmation_reservations_path, local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :check_in_date, "チェックイン日", class: "form-label" %>
+    <%= f.date_field :check_in_date, class: "form-control #{f.object.errors.include?(:check_in_date) ? 'border-danger' : ''}" %>
+    <%= render 'shared/field_error', resource: f.object, field: :check_in_date %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :check_out_date, "チェックアウト日", class: "form-label" %>
+    <%= f.date_field :check_out_date, class: "form-control #{f.object.errors.include?(:check_out_date) ? 'border-danger' : ''}" %>
+    <%= render 'shared/field_error', resource: f.object, field: :check_out_date %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :number_of_guests, "宿泊人数", class: "form-label" %>
+    <%= f.number_field :number_of_guests, class: "form-control #{f.object.errors.include?(:number_of_guests) ? 'border-danger' : ''}" %>
+    <%= render 'shared/field_error', resource: f.object, field: :number_of_guests %>
+  </div>
+
+  <%= f.hidden_field :user_id, value: current_user.id if current_user %>
+  <%= f.hidden_field :room_id, value: @room&.id || @reservation&.room_id %>
+
+  <div class="mb-2 mt-auto text-center">
+    <%= f.submit "確認する", class: "btn btn-warning w-100 rounded" %>
+  </div>
+<% end %>
