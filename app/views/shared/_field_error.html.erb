@@ -1,0 +1,11 @@
+<% if resource&.errors&.include?(field) %>
+  <div class="text-danger mt-1 small">
+    <%= resource.errors.full_messages_for(field).join(', ') %>
+  </div>
+<% end %>
+
+<% if defined?(help_text) && help_text.present? %>
+  <div class="form-text text-muted">
+    <%= help_text %>
+  </div>
+<% end %>
