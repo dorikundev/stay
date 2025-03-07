@@ -1,0 +1,40 @@
+<!-- rooms/newとrooms/editで使用 -->
+<%= form_with(model: @room || Room.new, local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "施設名", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control #{f.object.errors.include?(:name) ? 'border-danger' : ''}" %>
+    <%= render 'shared/field_error', resource: f.object, field: :name %>
+  </div>
+
+  <%= f.hidden_field :user_id, value: current_user.id if current_user %>
+
+  <div class="mb-3">
+    <%= f.label :address, "住所", class: "form-label" %>
+    <%= f.text_field :address, class: "form-control #{f.object.errors.include?(:address) ? 'border-danger' : ''}" %>
+    <%= render 'shared/field_error', resource: f.object, field: :address, help_text: '' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :price, "料金(1泊あたり)", class: "form-label" %>
+    <div class="input-group">
+      <span class="input-group-text">¥</span>
+      <%= f.number_field :price, class: "form-control #{f.object.errors.include?(:price) ? 'border-danger' : ''}" %>
+    </div>
+    <%= render 'shared/field_error', resource: f.object, field: :price, help_text: '1円以上の整数で入力してください' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :description, "説明文", class: "form-label" %>
+    <%= f.text_area :description, class: "form-control #{f.object.errors.include?(:description) ? 'border-danger' : ''}", rows: 5 %>
+    <%= render 'shared/field_error', resource: f.object, field: :description, help_text: '500文字以内で入力してください' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :image, "施設画像", class: "form-label" %>
+    <%= f.file_field :image, class: "form-control #{f.object.errors.include?(:image) ? 'border-danger' : ''}" %>
+  </div>
+
+  <div class="mb-2 mt-auto text-center">
+    <%= f.submit (f.object.new_record? ? "登録する" : "更新する"), class: "btn btn-warning w-100 rounded" %>
+  </div>
+<% end %>
