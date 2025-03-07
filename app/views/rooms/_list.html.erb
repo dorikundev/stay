@@ -1,0 +1,22 @@
+<% @rooms.each do |room| %>
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <% if room.image.attached? %>
+          <%= image_tag room.image.variant(resize_to_limit: [600, 400]) %>
+        <% else %>
+          <%= image_tag "default_room.png"%>
+        <% end %>
+        <div class="card-body px-3 d-flex flex-column">
+          <h5 class="card-title fw-bold mb-3"><%= room.name %></h5>
+          <div class="mb-3">
+            <p class="card-text fw-bold text-danger"><%= number_to_currency(room.price) %></p>
+            <p class="card-text"><%= truncate(room.description, length: 100) %></p>
+            <p class="card-text">登録日:<%= room.created_at.strftime("%Y/%m/%d") %></p>
+          </div>
+          <div class="mt-auto text-center">
+            <%= link_to "詳細はこちら", room_path(room), class: "btn btn-warning fw-bold w-100 rounded" %>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>

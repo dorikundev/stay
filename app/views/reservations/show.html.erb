@@ -1,0 +1,51 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-9">
+      <!-- 予約詳細 -->
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4>予約詳細</h4>
+          <% if user_signed_in? && current_user.id == @room.user_id %>
+          <div>
+            <%= link_to "編集", edit_room_path(@room), class: "btn btn-outline-primary me-2" %>
+            <%= link_to "削除", room_path(@room), method: :delete,
+                        data: { confirm: "この施設を削除します" },
+                        class: "btn btn-outline-danger" %>
+          </div>
+        <% end %>
+        </div>
+        <div class="card-body p-4">
+          <div class="row">
+            <!-- 施設画像 -->
+            <div class="col-md-6">
+              <% if @reservation.room.image.attached? %>
+                <%= image_tag @reservation.room.image.variant(resize_to_limit: [600, 400]), class: "img-fluid rounded" %>
+              <% else %>
+                <%= image_tag "default_room.png", class: "img-fluid rounded" %>
+              <% end %>
+            </div>
+            <!-- 予約情報 -->
+            <div class="col-md-6">
+              <h4 class="mb-3"><%= @reservation.room.name %></h4>
+              <div>
+                <p>予約確定日時: <%= @reservation.created_at.strftime("%Y/%m/%d %H:%m") %></p>
+                <p>チェックイン日: <%= @reservation.check_in_date.strftime("%Y/%m/%d") %></p>
+                <p>チェックアウト日: <%= @reservation.check_out_date.strftime("%Y/%m/%d") %></p>
+                <p>宿泊人数: <%= @reservation.number_of_guests %>人</p>
+                <p>宿泊日数: <%= @reservation.duration %>日</p>
+                <p>料金: <%= number_to_currency(@reservation.room.price) %>/日</p>
+                <p class="fw-bold">合計金額: <%= number_to_currency(@reservation.total_price) %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 施設詳細リンク -->
+      <div class="mt-4 text-center">
+        <%= link_to "施設詳細に戻る", room_path(@reservation.room), class: "btn btn-primary" %>
+        <%= link_to "予約一覧へ", own_reservations_path, class: "btn btn-outline-secondary ms-2" %>
+      </div>
+    </div>
+  </div>
+</div>

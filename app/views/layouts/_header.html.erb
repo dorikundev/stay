@@ -1,0 +1,47 @@
+<header class="navbar navbar-expand bg-white border-bottom">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="/rooms">
+      <%= image_tag "stay_icon.png", alt: "STAY", height: "35", style: "width: auto;" %>
+    </a>
+    
+    <!-- 検索フォームを配置 -->
+    <div class="d-flex align-items-center justify-content-center flex-grow-1">
+      <%= render "searches/form" %>
+    </div>
+    
+    <div class="d-flex align-items-center">
+      <ul class="navbar-nav mb-0">
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-inline-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="me-2">
+                <% if current_user && current_user.avatar.attached? %>
+                  <div style="width: 30px; height: 30px; overflow: hidden; border-radius: 50%;">
+                    <%= image_tag current_user.avatar.variant(resize_to_fill: [30, 30]), style: "width: 100%; height: 100%; object-fit: cover;" %>
+                  </div>
+                <% else %>
+                  <%= image_tag "user_icon.png", style: "height: 30px; width: auto;" %>
+                <% end %>
+              </div>
+              <span class="text-truncate" style="max-width: 120px;">
+                <%= current_user.username  %>
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><%= link_to "施設作成", rooms_new_path, class: "dropdown-item" %></li>
+              <li><%= link_to "登録中の施設", own_rooms_path, class: "dropdown-item" %></li>
+              <li><%= link_to "予約済みの施設", own_reservations_path, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to "プロフィール", users_profile_path, class: "dropdown-item" %></li>
+              <li><%= link_to "アカウント設定", users_account_path, class: "dropdown-item" %></li>
+              <li><%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item", form: { class: "d-inline" } %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link border rounded-pill px-3" %></li>
+          <li class="nav-item ms-2"><%= link_to "新規登録", new_user_registration_path, class: "nav-link bg-primary text-white rounded-pill px-3" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</header>

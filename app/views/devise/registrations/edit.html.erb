@@ -1,0 +1,44 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4>アカウント設定</h4>
+        </div>
+        <div class="card-body">
+          <%= form_with(model: @user, url: user_registration_path, method: :patch, local: true) do |f| %>            
+            <div class="mb-3">
+              <%= f.label :email, "メールアドレス", class: "form-label" %>
+              <%= f.email_field :email, class: "form-control" %>
+              <%= render "devise/shared/error_messages", resource: f.object, field: :email, help_text: '' %>
+            </div>
+            
+            <div class="mb-3">
+              <%= f.label :password, "新しいパスワード", class: "form-label" %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+              <%= render "devise/shared/error_messages", resource: f.object, field: :password, help_text: '' %>
+            </div>
+            
+            <div class="mb-3">
+              <%= f.label :password_confirmation, "新しいパスワード（確認）", class: "form-label" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+              <%= render "devise/shared/error_messages", resource: f.object, field: :password_confirmation, help_text: '' %>
+            </div>
+            
+            <div class="mb-3">
+              <%= f.label :current_password, "現在のパスワード", class: "form-label" %>
+              <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+              <%= render "devise/shared/error_messages", resource: f.object, field: :current_password, help_text: '' %>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <%= f.submit "更新", class: "btn btn-primary" %>
+              <%= link_to "キャンセル", request.referer, class: "btn btn-outline-secondary" %>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

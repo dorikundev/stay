@@ -1,0 +1,17 @@
+<%= form_with url: search_path, method: :get, local: true do |f| %>
+    <div class="d-flex gap-2 align-items-center">
+        <%= f.hidden_field :range, value: 'room' %>
+        <%= f.hidden_field :search, value: 'partial_match' %>
+        <%= f.select :area, 
+        [["地域選択", ""], 
+         ["東京", "東京"], 
+         ["大阪", "大阪"], 
+         ["京都", "京都"], 
+         ["札幌", "札幌"]], 
+        { include_blank: false }, 
+        { class: "form-control" } %>
+        <%= f.text_field :address, class: "form-control", placeholder: "地域を入力" %>
+        <%= f.text_field :keyword, class: "form-control", placeholder: "キーワードを入力" %>
+        <%= f.submit "検索", class: "btn btn-warning" %>
+    </div>
+  <% end %>

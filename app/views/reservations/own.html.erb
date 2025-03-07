@@ -1,0 +1,50 @@
+<div class="container">
+  <h2 class="my-4">予約一覧</h2>
+  <% if @reservations.present? %>
+    <div class="row justify-content-start">
+      <% @reservations.each do |reservation| %>
+        <div class="col-12 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body px-3 d-flex flex-column">
+              <div class="row">
+                <!-- 施設画像 -->
+                <div class="col-md-6 mb-3">
+                  <% if reservation.room.image.attached? %>
+                    <%= image_tag reservation.room.image.variant(resize_to_limit: [600, 400]), class: "img-fluid rounded" %>
+                  <% else %>
+                    <%= image_tag "default_room.png", class: "img-fluid rounded" %>
+                  <% end %>
+                </div>
+                
+                <div class="col-md-6">
+                  <h5 class="card-title fw-bold mb-3"><%= reservation.room.name %></h5>
+                  
+                  <div class="room-details mb-3">
+                    <p>予約確定日時: <%= reservation.created_at.strftime("%Y/%m/%d %H:%m") %></p>
+                    <p class="card-text">予約日: <%= reservation.check_in_date.strftime("%Y/%m/%d") %> 〜
+                      <%= reservation.check_out_date.strftime("%Y/%m/%d") %></p>
+                    <p class="card-text">宿泊人数: <%= reservation.number_of_guests %>人</p>
+                    <p class="card-text">宿泊日数: <%= reservation.duration %>日</p>
+                    <p class="card-text fw-bold">合計金額: <%= number_to_currency(reservation.total_price) %></p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="d-flex mt-auto">
+                <%= link_to "詳細を見る", reservation_path(reservation), class: "btn btn-primary me-2" %>
+                <%= link_to "編集", edit_reservation_path(reservation), class: "btn btn-outline-secondary me-2" %>
+                <%= link_to "削除", reservation_path(reservation), method: :delete,
+                          data: { confirm: "この予約を削除してもよろしいですか？" },
+                          class: "btn btn-outline-danger" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      予約がありません。<%= link_to "施設を探す", rooms_path, class: "alert-link" %>
+    </div>
+  <% end %>
+</div>

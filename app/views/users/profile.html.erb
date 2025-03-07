@@ -1,0 +1,42 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4>プロフィール</h4>
+          <%= link_to "編集", users_profile_edit_path, class: "btn btn-sm btn-outline-primary" %>
+        </div>
+        <div class="card-body">
+          <!-- プロフィール画像 -->
+          <div class="text-center mb-4">
+            <% if @user.avatar.attached? %>
+              <div style="width: 100px; height: 100px; margin: 0 auto;">
+                <%= image_tag @user.avatar.variant(resize_to_fill: [100, 100]) %>
+              </div>
+            <% else %>
+              <%= image_tag "user_icon.png", style: "height: 100px; width: auto;" %>
+            <% end %>
+          </div>
+          
+          <!-- プロフィール情報 -->
+          <div class="profile-info">
+            <div class="mb-3">
+              <strong>メールアドレス:</strong> <%= @user.email %>
+            </div>
+            <div class="mb-3">
+              <strong>登録日:</strong> <%= @user.created_at.strftime("%Y/%m/%d") %>
+            </div>
+            <div class="mb-3">
+              <strong>自己紹介:</strong>
+              <% if @user.bio.present? %>
+                <%= @user.bio %>
+              <% else %>
+                <span class="text-muted">自己紹介はまだ設定されていません。</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
