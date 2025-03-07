@@ -7,6 +7,7 @@ ruby '3.1.6'
 gem 'rails', '= 6.1.3.2'
 gem 'devise'
 gem 'rails-i18n', '~> 6.0.0'
+gem 'image_processing', '~> 1.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
